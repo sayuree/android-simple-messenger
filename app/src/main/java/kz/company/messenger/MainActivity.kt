@@ -14,7 +14,16 @@ class MainActivity : AppCompatActivity() {
         already_have_an_account_text_view.setOnClickListener{
             val intent = Intent(this, LoginActvity::class.java)
             startActivity(intent)
-            Log.d("MainActivity", "Try to navigate")
+            Log.d("MainActivity", "Try to navigate to login page")
+        }
+
+        register_button_register.setOnClickListener{
+            val email = email_edittext_register.text.toString()
+            val password = password_edittext_register.text.toString()
+
+            Log.d("MainActivity", "Email: $email")
+            Log.d("MainActivity", "Password: $password")
+
         }
     }
 
