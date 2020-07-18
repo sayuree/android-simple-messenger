@@ -1,14 +1,21 @@
 package kz.company.messenger
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.core.provider.FontsContractCompat.FontRequestCallback.RESULT_OK
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import java.net.URI
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth:FirebaseAuth
@@ -31,6 +38,19 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //requestCode == 0 : check to which request we are responding to
+        //resultCode == RESULT_OK : make sure the request was successful and the data you wanted is received
+        if (requestCode == 0 && data != null && resultCode == RESULT_OK){
+            Log.d("Register", "The photo is succesfully selected!")
+            val uri:Uri? = data.data
+            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver,uri)
+            val bitmapDrawable = BitmapDrawable(bitmap)
+            photoframe_button_register.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
