@@ -1,6 +1,5 @@
 package kz.company.messenger
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -10,13 +9,12 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import androidx.core.provider.FontsContractCompat.FontRequestCallback.RESULT_OK
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
-import java.net.URI
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -32,7 +30,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         register_button_register.setOnClickListener{
-            register_users()
+            registerUsers()
         }
 
         photoframe_button_register.setOnClickListener {
@@ -68,11 +66,24 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d("Register","Successfully uploaded photo into Firebase Storage!")
                 reference.downloadUrl.addOnSuccessListener {
                     Log.d("Register", "URL for a file: $it")
+                    saveUserDataInFirestore(it.toString())
                 }
             }
 
     }
-    private fun  register_users(){
+
+    private fun saveUserDataInFirestore(userPhotoURL:String){
+        if(userPhotoURL == null) return
+        val database = Firebase.database
+        val uid = Firebase.auth.uid
+        val username = username_edittext_register.text.toString()
+        val user = User(uid.toString(), userPhotoURL, username)
+        val ref = database.getReference("/users/$uid")
+        ref.setValue(user)
+        Log.d("Register", "Successfully added user data to Firebase Database")
+
+    }
+    private fun  registerUsers(){
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
 
@@ -101,3 +112,5 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 }
+
+class User(val uid:String, val photoURL:String, val username:String)
