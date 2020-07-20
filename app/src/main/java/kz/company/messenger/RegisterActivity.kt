@@ -14,8 +14,10 @@ import androidx.core.provider.FontsContractCompat.FontRequestCallback.RESULT_OK
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URI
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth:FirebaseAuth
@@ -40,6 +42,7 @@ class RegisterActivity : AppCompatActivity() {
             startActivityForResult(intent, 0)
         }
     }
+    var selectedPhotoUri:Uri? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -47,13 +50,28 @@ class RegisterActivity : AppCompatActivity() {
         //resultCode == RESULT_OK : make sure the request was successful and the data you wanted is received
         if (requestCode == 0 && data != null && resultCode == RESULT_OK){
             Log.d("Register", "The photo is succesfully selected!")
-            val uri:Uri? = data.data
-            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver,uri)
+            selectedPhotoUri = data.data
+            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
             val bitmapDrawable = BitmapDrawable(bitmap)
             photoframe_button_register.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
+    private fun uploadImageToFirebaseStorage(){
+        // generating random string for file name
+        if (selectedPhotoUri == null) return
+        val filename:String = UUID.randomUUID().toString()
+        val storage = Firebase.storage
+        val reference = storage.getReference("/images/$filename")
+        reference.putFile(selectedPhotoUri!!)
+            .addOnCompleteListener{
+                Log.d("Register","Successfully uploaded photo into Firebase Storage!")
+                reference.downloadUrl.addOnSuccessListener {
+                    Log.d("Register", "URL for a file: $it")
+                }
+            }
+
+    }
     private fun  register_users(){
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
@@ -76,6 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 // Case 2: Registration is successful
                 Log.d("MainActivity","Successfully registered user with uid:${it.result?.user?.uid}")
+                uploadImageToFirebaseStorage()
             }.addOnFailureListener {
                 Log.d("MainActivity", "Failed to register a user:${it.message}")
             }
