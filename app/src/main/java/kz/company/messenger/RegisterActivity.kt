@@ -83,8 +83,15 @@ class RegisterActivity : AppCompatActivity() {
         val username = username_edittext_register.text.toString()
         val user = User(uid.toString(), userPhotoURL, username)
         val ref = database.getReference("/users/$uid")
-        ref.setValue(user)
-        Log.d("Register", "Successfully added user data to Firebase Database")
+        ref.setValue(user).addOnSuccessListener {
+            Log.d("Register", "Successfully added user data to Firebase Database")
+            val intent = Intent(this, LatestMessagesActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }.addOnFailureListener {
+            Log.d("Register", "Could not save user data ${it.message}!")
+        }
+
 
     }
     private fun  registerUsers(){

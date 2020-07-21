@@ -14,8 +14,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/rounded_edittext_register"
         app:layout_constraintLeft_toRightOf="parent"
-        android:inputType="text"
-        android:hint="@string/username"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
         android:paddingLeft="16dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
@@ -55,6 +55,7 @@
         app:layout_constraintRight_toRightOf="@id/login_button"
         android:text="@string/back_to_register"
         android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
         android:textStyle="bold"
         android:textSize="18sp"
         android:gravity="center"/>
