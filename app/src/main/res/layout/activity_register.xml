@@ -7,6 +7,17 @@
     android:background="@color/blueBell"
     tools:context=".RegisterActivity">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:civ_border_color="@color/pink"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/photoframe_button_register"
+        app:layout_constraintEnd_toEndOf="@+id/photoframe_button_register"
+        app:layout_constraintStart_toStartOf="@+id/photoframe_button_register"
+        app:layout_constraintTop_toTopOf="@+id/photoframe_button_register" />
+
     <Button
         android:id="@+id/photoframe_button_register"
         android:layout_width="150dp"

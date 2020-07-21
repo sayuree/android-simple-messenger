@@ -14,14 +14,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
 
         already_have_an_account_text_view.setOnClickListener{
             val intent = Intent(this, LoginActvity::class.java)
@@ -50,8 +50,10 @@ class RegisterActivity : AppCompatActivity() {
             Log.d("Register", "The photo is succesfully selected!")
             selectedPhotoUri = data.data
             val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            photoframe_button_register.setBackgroundDrawable(bitmapDrawable)
+            profile_image.setImageBitmap(bitmap)
+            photoframe_button_register.alpha =0f
+//            val bitmapDrawable = BitmapDrawable(bitmap)
+//            photoframe_button_register.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
@@ -67,6 +69,8 @@ class RegisterActivity : AppCompatActivity() {
                 reference.downloadUrl.addOnSuccessListener {
                     Log.d("Register", "URL for a file: $it")
                     saveUserDataInFirestore(it.toString())
+                }.addOnFailureListener {
+                    Log.d("Register", "Could not get a URL for a file ${it.message}")
                 }
             }
 
