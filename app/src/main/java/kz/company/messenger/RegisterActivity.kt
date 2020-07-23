@@ -23,10 +23,10 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        already_have_an_account_text_view.setOnClickListener{
+        already_have_an_account_text_view.setOnClickListener {
+            Log.d("RegisterActivity", "Try to navigate to login page")
             val intent = Intent(this, LoginActvity::class.java)
             startActivity(intent)
-            Log.d("MainActivity", "Try to navigate to login page")
         }
 
         register_button_register.setOnClickListener{
@@ -34,7 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         photoframe_button_register.setOnClickListener {
-            Log.d("MainActivity","Trying to select photo")
+            Log.d("RegisterActivity","Trying to select photo")
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)

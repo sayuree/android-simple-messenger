@@ -14,10 +14,13 @@ class LoginActvity:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        logInUser()
-
+        Log.d("LoginActivity", "Successfully navigated!")
         back_to_register_text_view.setOnClickListener {
             finish()
+        }
+
+        login_button.setOnClickListener {
+            logInUser()
         }
     }
 
@@ -30,6 +33,7 @@ class LoginActvity:AppCompatActivity(){
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             Log.d("LoginActivity", "Sucessfully logged in!")
         }.addOnFailureListener {
+            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
             Log.d("LoginActivity", "Failed to log in ${it.message}")
         }
     }
