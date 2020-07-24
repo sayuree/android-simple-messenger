@@ -71,6 +71,7 @@ class RegisterActivity : AppCompatActivity() {
                     saveUserDataInFirestore(it.toString())
                 }.addOnFailureListener {
                     Log.d("Register", "Could not get a URL for a file ${it.message}")
+                    Toast.makeText(this, "${it.message}",Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -104,8 +105,8 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        Log.d("MainActivity", "Email: $email")
-        Log.d("MainActivity", "Password: $password")
+        Log.d("RegisterActivity", "Email: $email")
+        Log.d("RegisterActivity", "Password: $password")
         auth = Firebase.auth
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this){
@@ -115,10 +116,12 @@ class RegisterActivity : AppCompatActivity() {
                     return@addOnCompleteListener
                 }
                 // Case 2: Registration is successful
-                Log.d("MainActivity","Successfully registered user with uid:${it.result?.user?.uid}")
+                Log.d("RegisterActivity","Successfully registered user with uid:${it.result?.user?.uid}")
                 uploadImageToFirebaseStorage()
             }.addOnFailureListener {
-                Log.d("MainActivity", "Failed to register a user:${it.message}")
+                Log.d("RegisterActivity", "Failed to register a user:${it.message}")
+            }.addOnSuccessListener {
+                Toast.makeText(this, "Registered successfully", Toast.LENGTH_LONG).show()
             }
     }
 
