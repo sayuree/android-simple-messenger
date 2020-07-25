@@ -107,7 +107,7 @@ class RegisterActivity : AppCompatActivity() {
 
         Log.d("RegisterActivity", "Email: $email")
         Log.d("RegisterActivity", "Password: $password")
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this){
                 // Case 1: Registration is failed

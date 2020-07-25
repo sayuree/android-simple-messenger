@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -17,7 +18,7 @@ class LatestMessagesActivity : AppCompatActivity() {
     }
 
     private fun verifyUserIsLoggedIn(){
-        val uid = Firebase.auth.uid
+        val uid = FirebaseAuth.getInstance()
         if (uid == null){
             Log.d("LatesMessagesActivity", "The user is not logged in")
             val intent = Intent(this, RegisterActivity::class.java)
