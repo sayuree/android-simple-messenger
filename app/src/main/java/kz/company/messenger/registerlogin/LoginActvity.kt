@@ -1,4 +1,4 @@
-package kz.company.messenger
+package kz.company.messenger.registerlogin
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
+import kz.company.messenger.R
+import kz.company.messenger.messages.LatestMessagesActivity
 
 class LoginActvity:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {

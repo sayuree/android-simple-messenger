@@ -1,8 +1,7 @@
-package kz.company.messenger
+package kz.company.messenger.registerlogin
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +14,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_register.*
+import kz.company.messenger.R
+import kz.company.messenger.messages.LatestMessagesActivity
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -82,7 +83,11 @@ class RegisterActivity : AppCompatActivity() {
         val database = Firebase.database
         val uid = Firebase.auth.uid
         val username = username_edittext_register.text.toString()
-        val user = User(uid.toString(), userPhotoURL, username)
+        val user = User(
+            uid.toString(),
+            userPhotoURL,
+            username
+        )
         val ref = database.getReference("/users/$uid")
         ref.setValue(user).addOnSuccessListener {
             Log.d("Register", "Successfully added user data to Firebase Database")

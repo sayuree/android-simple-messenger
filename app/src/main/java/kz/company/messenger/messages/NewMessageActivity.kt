@@ -1,21 +1,20 @@
-package kz.company.messenger
+package kz.company.messenger.messages
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_new_message.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
+import kz.company.messenger.R
+import kz.company.messenger.registerlogin.User
 
 class NewMessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +33,7 @@ class NewMessageActivity : AppCompatActivity() {
         ref.addListenerForSingleValueEvent(object :ValueEventListener{
             val adapter = GroupAdapter<GroupieViewHolder>()
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("NewMessages", "Reading data is not permitted: $error")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -52,7 +51,7 @@ class NewMessageActivity : AppCompatActivity() {
     }
 }
 
-class UserItem(val user:User): Item<GroupieViewHolder>(){
+class UserItem(val user: User): Item<GroupieViewHolder>(){
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.userName_new_message.text = user.username
         Picasso.get().load(user.photoURL).into(viewHolder.itemView.account_photo_new_message)
