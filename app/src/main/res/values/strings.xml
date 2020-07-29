@@ -10,4 +10,6 @@
     <string name="select_photo_register">Select\nPhoto</string>
     <string name="signOut">SIGN OUT</string>
     <string name="newMessage">NEW MESSAGE</string>
+    <string name="enter_message_prompt">Enter a message</string>
+    <string name="send_prompt_dialogue">Send</string>
 </resources>

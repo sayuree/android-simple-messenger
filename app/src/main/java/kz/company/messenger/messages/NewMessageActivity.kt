@@ -1,5 +1,6 @@
 package kz.company.messenger.messages
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -43,6 +44,11 @@ class NewMessageActivity : AppCompatActivity() {
                     if(user != null) {
                         adapter.add(UserItem(user))
                     }
+                }
+                adapter.setOnItemClickListener { item, view ->
+                    val intent = Intent(this@NewMessageActivity, ChatLogActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 recyclerView.adapter = adapter
             }
