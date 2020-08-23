@@ -12,4 +12,6 @@
     <string name="newMessage">NEW MESSAGE</string>
     <string name="enter_message_prompt">Enter a message</string>
     <string name="send_prompt_dialogue">Send</string>
+    <string name="user_profile_photo">User Profile Picture</string>
+    <string name="place_for_user_message">Place For User Message</string>
 </resources>

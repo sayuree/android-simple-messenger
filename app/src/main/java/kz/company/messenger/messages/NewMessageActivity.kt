@@ -24,7 +24,7 @@ class NewMessageActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Select User"
         val adapter = GroupAdapter<GroupieViewHolder>()
-        recyclerView.adapter = adapter
+        new_message_recyclerView.adapter = adapter
 //        adapter.add(UserItem())
         fetchUserData()
     }
@@ -50,7 +50,7 @@ class NewMessageActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-                recyclerView.adapter = adapter
+                new_message_recyclerView.adapter = adapter
             }
 
         })
